@@ -1,0 +1,12 @@
+mkdir: create a new directory 
+cd: change directory 
+add: stage changes for the next commit 
+commit: save staged snapshot to history 
+status: check which files are staged or modified 
+rm --cached: unstage a file but keep it locally 
+branch: create or list branches 
+merge: join two development histories together 
+push: upload local commits to GitHub 
+pull: fetch and merge changes from GitHub 
+remote add origin: connect local repo to GitHub 
+config --global: set user name and email 
