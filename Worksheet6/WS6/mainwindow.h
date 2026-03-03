@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -21,8 +22,17 @@ public:
     // Example of slot definition in mainwindow.h
     // =====================================================================
     // Add this to the MainWindow class definition
+
+
+
 public slots:
     void handleButton();
+    // =====================================================================
+    // Example of signal definition in mainwindow.h
+    // =====================================================================
+    // This needs adding to the MainWindow class definition
+signals:
+    void statusUpdateMessage(const QString &message, int timeout);
     // =====================================================================
 
 private:

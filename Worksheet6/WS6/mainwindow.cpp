@@ -14,6 +14,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButton, &QPushButton::released, this, &MainWindow::handleButton);
     // =====================================================================
+
+    // Example of connecting to StatusBar signal mainwindow.cpp=============
+    // This needs adding to end of MainWindow constructor
+
+    // Connect the statusUpdateMessage() signal to the showMessage() slot of the status bar
+    connect(this, &MainWindow::statusUpdateMessage, ui->statusbar, &QStatusBar::showMessage);
+    // =====================================================================
 }
 
 
@@ -23,6 +30,8 @@ MainWindow::~MainWindow()
     delete ui;
 
 }
+
+
 
 //replaced with new
 // Update your button handling slot so it activates status bar
