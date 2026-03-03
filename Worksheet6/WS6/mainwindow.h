@@ -1,8 +1,11 @@
-#include "ModelPartList.h"//added
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "ModelPartList.h"//added
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,6 +31,7 @@ public:
 
 public slots:
     void handleButton();
+    void handleTreeClicked(); // Added
     // =====================================================================
     // Example of signal definition in mainwindow.h
     // =====================================================================
