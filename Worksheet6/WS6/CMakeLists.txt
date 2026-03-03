@@ -11,6 +11,10 @@ qt_add_executable(WS6
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+ModelPart.cpp        # Added this
+    ModelPart.h          # Added this
+    ModelPartList.cpp    # Added this
+    ModelPartList.h      # Added this
 )
 
 target_link_libraries(WS6
