@@ -71,3 +71,9 @@ void MainWindow::handleTreeClicked() {
     /* Show the message in the status bar */
     emit statusUpdateMessage(QString("The selected item is: ") + text, 0);
 }
+
+void MainWindow::on_actionOpen_File_triggered()
+{
+
+}
+

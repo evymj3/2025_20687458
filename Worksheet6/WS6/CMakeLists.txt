@@ -14,7 +14,8 @@ qt_add_executable(WS6
 ModelPart.cpp        # Added this
     ModelPart.h          # Added this
     ModelPartList.cpp    # Added this
-    ModelPartList.h      # Added this
+    ModelPartList.h
+    icons.qrc      # Added this
 )
 
 target_link_libraries(WS6
