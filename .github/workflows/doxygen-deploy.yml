@@ -3,7 +3,7 @@ name: doxygen-deploy
 
 on:
   push:
-    branches: [ master ] # Note: this needs to be set to your default branch name
+    branches: [ main ] # Note: this needs to be set to your default branch name
 
 jobs:
   # The job that will build worksheet 5
