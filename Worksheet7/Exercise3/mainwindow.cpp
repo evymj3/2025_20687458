@@ -19,74 +19,60 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // 1. Existing connections for buttons and status bar
+    // Layout fix to ensure the 3D window isn't squashed
+    ui->horizontalLayout->setStretch(0, 1);
+    ui->horizontalLayout->setStretch(1, 4);
+
+    // 1. Existing connections
     connect(ui->pushButton, &QPushButton::released, this, &MainWindow::handleButton);
     connect(this, &MainWindow::statusUpdateMessage, ui->statusbar, &QStatusBar::showMessage);
     connect(ui->treeView, &QTreeView::clicked, this, &MainWindow::handleTreeClicked);
 
-    // 2. Create and link the ModelPartList (Worksheet 6 logic)
+    // 2. Create and link the ModelPartList
     this->partList = new ModelPartList("PartsList");
     ui->treeView->setModel(this->partList);
 
-    // 3. Populate the tree with items
+    // 3. Populate the tree
     ModelPart *rootItem = this->partList->getRootItem();
-
     for (int i = 0; i < 3; i++) {
-        QString name = QString("TopLevel %1").arg(i);
-        QString visible("true");
-        ModelPart *childItem = new ModelPart({ name, visible });
+        ModelPart *childItem = new ModelPart({ QString("TopLevel %1").arg(i), "true" });
         rootItem->appendChild(childItem);
-
         for (int j = 0; j < 5; j++) {
-            QString subName = QString("Item %1,%2").arg(i).arg(j);
-            QString subVisible("true");
-            ModelPart *childChildItem = new ModelPart({ subName, subVisible });
-            childItem->appendChild(childChildItem);
+            childItem->appendChild(new ModelPart({ QString("Item %1,%2").arg(i).arg(j), "true" }));
         }
     }
-    // <--- The Tree Loops end here.
 
     // =========================================================
-    // VTK INITIALIZATION (Exercise 3)
+    // VTK INITIALIZATION
     // =========================================================
-
-    /* Link a render window with the Qt widget */
-    // IMPORTANT: Check that your widget in Qt Creator is named 'vtkWidget'
     renderWindow = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
     ui->vtkWidget->setRenderWindow(renderWindow);
 
-    /* Add a renderer */
     renderer = vtkSmartPointer<vtkRenderer>::New();
     renderWindow->AddRenderer(renderer);
+    renderer->SetBackground(0.15, 0.15, 0.2); // Dark blue-grey
 
-    /* Create the Cylinder object */
     vtkNew<vtkCylinderSource> cylinder;
-    cylinder->SetResolution(8);
+    cylinder->SetResolution(20);
 
-    /* Create the mapper */
     vtkNew<vtkPolyDataMapper> cylinderMapper;
     cylinderMapper->SetInputConnection(cylinder->GetOutputPort());
 
-    /* Create the actor */
     vtkNew<vtkActor> cylinderActor;
     cylinderActor->SetMapper(cylinderMapper);
-    cylinderActor->GetProperty()->SetColor(1.0, 0.0, 0.35); // Pinkish-Red
+    cylinderActor->GetProperty()->SetColor(1.0, 0.2, 0.4); // Pinkish-Red
     cylinderActor->RotateX(30.0);
-    cylinderActor->RotateY(-45.0);
 
-    /* Add the actor to the renderer */
     renderer->AddActor(cylinderActor);
 
-    /* Setup Camera */
     renderer->ResetCamera();
     renderer->GetActiveCamera()->Azimuth(30);
     renderer->GetActiveCamera()->Elevation(30);
-    renderer->ResetCameraClippingRange();
 
-    /* MANDATORY: Tell the window to actually draw the cylinder */
     renderWindow->Render();
+}
 
-} // <--- End of Constructor
+// --- THESE ARE THE MISSING FUNCTIONS THAT CAUSED YOUR LINKER ERRORS ---
 
 MainWindow::~MainWindow()
 {
@@ -99,7 +85,6 @@ void MainWindow::handleButton() {
 
 void MainWindow::handleTreeClicked() {
     QModelIndex index = ui->treeView->currentIndex();
-
     if (index.isValid()) {
         ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
         QString text = selectedPart->data(0).toString();
@@ -109,5 +94,5 @@ void MainWindow::handleTreeClicked() {
 
 void MainWindow::on_actionOpen_File_triggered()
 {
-    // Placeholder for Exercise 4
+    // Placeholder
 }
